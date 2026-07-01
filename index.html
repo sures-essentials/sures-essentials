@@ -34,7 +34,7 @@
     SHOP_SIGNATURE: "Sure's Essentials",
     // Paste your Google Apps Script Web App URL here once deployed
     // (see apps-script-backend.js for setup steps).
-    SHEET_WEBHOOK_URL: "https://script.google.com/macros/library/d/1_vNCHqDLYGe2XxBjQFFoRDP33_xw_vwdNDLGxMyDTyidMmOMKiY1LWKS/1",
+    SHEET_WEBHOOK_URL: "https://script.google.com/macros/s/AKfycbzndTnLmC0IRYYEVersxOnVjwYGYzIE-sw5LpAgC7_rpbXkpW2RWZtknZNJpP7QgEEvmA/exec",
     CURRENCY: "\u20B1",
   };
 
@@ -564,7 +564,7 @@
   <div class="ticket-body" id="ticketBody"></div>
 </aside>
 
-<section class="qr-section">
+<section class="qr-section" id="qrSection" style="display:none;">
   <h2>Shelf tag</h2>
   <p class="hint">Enter the web address where this page will live, then print the tag for your counter, window, or shelf.</p>
   <div class="qr-card">
@@ -866,6 +866,14 @@
     </body></html>`);
     w.document.close();
   };
+
+  // Shelf-tag / QR tool is for the shop owner only — hidden from customers
+  // by default. Add ?admin=1 to the page URL to reveal it, e.g.:
+  // https://yoursite.com/index.html?admin=1
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === '1'){
+    document.getElementById('qrSection').style.display = '';
+  }
 
   renderTierToggle();
   renderCatalog();
